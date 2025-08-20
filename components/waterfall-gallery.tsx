@@ -196,7 +196,7 @@ export function WaterfallGallery() {
 
       {!pagination?.hasNextPage && items.length > 0 && (
         <div className="text-center py-8 text-muted-foreground">
-          <p>已经到底啦 ~</p>
+          <p>- 没有找到你可爱小脑袋？投票后立马上墙 -</p>
         </div>
       )}
 
