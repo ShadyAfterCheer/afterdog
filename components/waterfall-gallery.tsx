@@ -6,7 +6,7 @@ import { WifiOff } from "lucide-react";
 import Masonry from "react-masonry-css";
 
 import { GuessModal } from "./guess-modal";
-import { GalleryCard } from "./gallery-card"; // 引入新的卡片组件
+import { GalleryCard } from "./gallery-card";
 
 interface GalleryItemWithDetails extends GalleryItem {}
 
@@ -29,8 +29,6 @@ export function WaterfallGallery() {
 
   const loadingRef = useRef<HTMLDivElement>(null);
   const isLoadingRef = useRef<boolean>(false);
-  const hasNextPageRef = useRef<boolean>(false);
-  const isInitialLoadRef = useRef<boolean>(true);
 
   const fetchAllNames = useCallback(async () => {
     try {
@@ -63,9 +61,7 @@ export function WaterfallGallery() {
         } else {
           setItems(data.items || []);
         }
-
         setPagination(data.pagination);
-        hasNextPageRef.current = data.pagination?.hasNextPage || false;
       } catch (error) {
         console.error("Error fetching gallery items:", error);
         if (!isAppending) setFetchError(true);
@@ -79,13 +75,11 @@ export function WaterfallGallery() {
   );
 
   useEffect(() => {
-    isInitialLoadRef.current = true;
     setLoading(true);
     setFetchError(false);
     const initData = async () => {
-      await fetchGalleryItems(0, 16);
+      await fetchGalleryItems(0, 20);
       await fetchAllNames();
-      isInitialLoadRef.current = false;
     };
     initData();
   }, [fetchGalleryItems, fetchAllNames]);
@@ -95,29 +89,30 @@ export function WaterfallGallery() {
       const [entry] = entries;
       if (
         entry.isIntersecting &&
-        !isInitialLoadRef.current &&
-        hasNextPageRef.current &&
-        !isLoadingRef.current
+        !isLoadingRef.current &&
+        pagination?.hasNextPage
       ) {
         const offset = items.length;
-        const limit = 8;
-        fetchGalleryItems(offset, limit);
+        fetchGalleryItems(offset, 20);
       }
     },
-    [fetchGalleryItems, items.length]
+    [isLoadingRef, pagination, items, fetchGalleryItems]
   );
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.1,
-      rootMargin: "800px", // 提前 800px 开始加载，优化体验
+      rootMargin: "800px",
     });
     const loaderElement = loadingRef.current;
-    if (loaderElement && pagination?.hasNextPage) {
+    if (loaderElement) {
       observer.observe(loaderElement);
     }
-    return () => observer.disconnect();
-  }, [handleIntersection, pagination?.hasNextPage]);
+    return () => {
+      if (loaderElement) {
+        observer.unobserve(loaderElement);
+      }
+    };
+  }, [handleIntersection]);
 
   const handleItemClick = (item: GalleryItemWithDetails) => {
     setSelectedItem(item);
@@ -126,24 +121,24 @@ export function WaterfallGallery() {
 
   const breakpointColumnsObj = {
     default: 6,
-    1536: 6, // 2xl
-    1280: 5, // xl
-    1024: 4, // lg
-    768: 3, // md
-    640: 2, // sm
+    1536: 6,
+    1280: 5,
+    1024: 4,
+    768: 3,
+    640: 2,
     500: 1,
   };
 
   if (loading) {
     const skeletonHeights = [
-      280, 320, 260, 350, 300, 290, 340, 270, 310, 330, 285, 295,
+      280, 320, 260, 350, 300, 290, 340, 270, 310, 330, 285, 295, 315, 275, 325,
+      305, 295, 335, 265, 345,
     ];
     return (
       <div className="w-full max-w-none">
-        {/* 使用 Masonry 渲染骨架屏，使其结构与真实内容一致 */}
         <Masonry
           breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid flex" // 注意这里没有 gap，因为 gap 由 column 的 padding 模拟
+          className="my-masonry-grid flex"
           columnClassName="my-masonry-grid_column"
         >
           {skeletonHeights.map((height, i) => (
