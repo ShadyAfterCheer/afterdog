@@ -37,7 +37,7 @@ export function Navbar() {
           <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
             <span className="text-white font-bold text-sm">A</span>
           </div>
-          <span className="font-bold text-xl">AfterDog</span>
+          <span className="font-bold text-xl">AfterShip 疯狂动物城</span>
         </Link>
 
         <div className="flex items-center space-x-4">
