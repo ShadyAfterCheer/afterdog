@@ -22,9 +22,9 @@ export async function GET(request: NextRequest) {
     }
 
     // 去重并排序
-    const uniqueNames = [
-      ...new Set(names.map((item) => item.person_name)),
-    ].sort();
+    const uniqueNames = Array.from(
+      new Set(names.map((item) => item.person_name))
+    ).sort();
 
     return NextResponse.json({
       names: uniqueNames,

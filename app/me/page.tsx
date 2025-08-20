@@ -236,19 +236,9 @@ export default function MePage() {
                         />
                       </div>
                       <CardHeader className="pb-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">
-                            {formatDate(item.created_at)}
-                          </span>
-                        </div>
                         <h3 className="font-semibold text-lg">
                           {item.person_name}
                         </h3>
-                        {item.tags && item.tags.length > 0 && (
-                          <p className="text-sm text-muted-foreground line-clamp-2">
-                            {item.tags.join(", ")}
-                          </p>
-                        )}
                       </CardHeader>
                     </Card>
                   ))}
