@@ -8,8 +8,21 @@ import { EnvWarning } from "@/components/env-warning";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AfterDog - 写实卡通风宠物头像生成器",
+  title: "AfterShip 疯狂动物城",
   description: "上传人像照片，生成可爱的写实卡通风猫狗头像",
+  icons: {
+    icon: [
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+      {
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+    ],
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

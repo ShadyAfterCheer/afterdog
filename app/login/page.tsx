@@ -39,18 +39,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-orange-50">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">欢迎来到 AfterDog</CardTitle>
+          <CardTitle className="text-2xl">欢迎来到 AfterShip 疯狂动物城</CardTitle>
           <CardDescription>
             使用 Google 账户登录，开始生成你的写实卡通风宠物头像
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="text-center space-y-4">
-            <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-              <span className="text-white font-bold text-2xl">A</span>
+            <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-pink-500 to-red-500 flex items-center justify-center">
+              <span className="text-white font-bold text-2xl">🐾</span>
             </div>
             <div>
               <h3 className="text-lg font-semibold">

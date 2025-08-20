@@ -154,13 +154,30 @@ export function WaterfallGallery() {
   };
 
   if (loading) {
+    // 创建不同高度的skeleton来模拟真实的瀑布流
+    const skeletonHeights = [
+      280, 320, 260, 350, 300, 290, 340, 270, 310, 330, 285, 295, 315, 275, 325,
+      305, 295, 335, 265, 345,
+    ];
+
     return (
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 2xl:columns-6 gap-4 w-full max-w-none">
-        {[...Array(16)].map((_, i) => (
-          <Card key={i} className="break-inside-avoid mb-4 animate-pulse">
-            <div className="bg-muted rounded-lg" style={{ height: "300px" }} />
-          </Card>
-        ))}
+      <div className="w-full max-w-none">
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 2xl:columns-6 gap-4 w-full max-w-none">
+          {skeletonHeights.map((height, i) => (
+            <div
+              key={i}
+              className="break-inside-avoid mb-4 animate-pulse rounded-lg border bg-card shadow-sm overflow-hidden"
+            >
+              <div
+                className="bg-muted w-full h-full"
+                style={{
+                  height: `${height}px`,
+                  minHeight: "250px",
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
