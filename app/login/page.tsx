@@ -42,7 +42,9 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-orange-50">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">欢迎来到 AfterShip 疯狂动物城</CardTitle>
+          <CardTitle className="text-2xl">
+            欢迎来到 AfterShip 疯狂动物城
+          </CardTitle>
           <CardDescription>
             使用 Google 账户登录，开始生成你的写实卡通风宠物头像
           </CardDescription>

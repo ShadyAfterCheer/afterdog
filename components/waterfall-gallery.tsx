@@ -37,6 +37,7 @@ export function WaterfallGallery() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadingRef = useRef<HTMLDivElement>(null);
   const lastRequestTimeRef = useRef<number>(0);
+  const currentPageRef = useRef<number>(1);
 
   // 获取所有用户名称
   const fetchAllNames = useCallback(async () => {
@@ -56,6 +57,12 @@ export function WaterfallGallery() {
   const fetchGalleryItems = useCallback(
     async (page: number = 1, append: boolean = false) => {
       try {
+        // 防止重复请求同一页
+        if (append && pagination?.page === page) {
+          console.log("跳过重复请求:", page);
+          return;
+        }
+
         // 首屏拉取16条，后续每页8条
         const limit = page === 1 ? 16 : 8;
         const response = await fetch(
@@ -77,13 +84,17 @@ export function WaterfallGallery() {
             const uniqueNewItems = newItems.filter(
               (item: GalleryItemWithDetails) => !existingIds.has(item.id)
             );
+            console.log(`第${page}页加载了${uniqueNewItems.length}条新数据`);
             return [...prev, ...uniqueNewItems];
           });
         } else {
           setItems(data.items);
+          console.log(`初始加载了${data.items?.length || 0}条数据`);
         }
 
         setPagination(data.pagination);
+        // 更新当前页码引用
+        currentPageRef.current = page;
       } catch (error) {
         console.error("Error fetching gallery items:", error);
         toast.error("加载图片失败");
@@ -92,7 +103,7 @@ export function WaterfallGallery() {
         setLoadingMore(false);
       }
     },
-    []
+    [pagination?.page]
   );
 
   // 初始加载
@@ -114,9 +125,11 @@ export function WaterfallGallery() {
           !loadingMore &&
           now - lastRequestTimeRef.current > 1000
         ) {
+          const nextPage = currentPageRef.current + 1;
+          console.log(`准备加载第${nextPage}页`);
           lastRequestTimeRef.current = now;
           setLoadingMore(true);
-          fetchGalleryItems(pagination.page + 1, true);
+          fetchGalleryItems(nextPage, true);
         }
       },
       { threshold: 0.1 }
