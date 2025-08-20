@@ -167,7 +167,7 @@ export default function UploadPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container py-8">
+      <main className="container py-8 pt-24">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8 text-center">
             <h1 className="text-4xl font-bold mb-4">生成宠物头像</h1>

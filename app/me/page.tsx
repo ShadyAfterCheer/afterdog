@@ -112,7 +112,7 @@ export default function MePage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container py-8">
+      <main className="container py-8 pt-24">
         <div className="max-w-4xl mx-auto">
           {/* 用户信息 */}
           <Card className="mb-8">

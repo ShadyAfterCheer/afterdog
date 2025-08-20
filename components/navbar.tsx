@@ -6,16 +6,32 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { supabase } from "@/lib/supabase";
 import { LogOut, Upload, Home, User, Vote } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
   const { user, loading } = useAuth();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 0;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
   };
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-shadow duration-200 ${
+        scrolled ? "shadow-md" : "shadow-sm"
+      }`}
+    >
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
