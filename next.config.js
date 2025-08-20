@@ -7,7 +7,16 @@ const nextConfig = {
       "supabase.co",
       "images.unsplash.com",
     ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "iyaskfchisjuaftaxomg.supabase.co", // 您的 Supabase 项目域名
+        port: "",
+        pathname: "/storage/v1/object/public/gallery_images/**", // 您 Bucket 的路径
+      },
+    ],
   },
+
   // 优化构建配置
   experimental: {
     // 优化包大小
