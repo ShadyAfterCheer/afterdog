@@ -27,7 +27,7 @@ export function GalleryCard({ item, onItemClick }: GalleryCardProps) {
         <div className="relative overflow-hidden">
           <Image
             src={item.generated_image}
-            alt={item.person_name || "Gallery image"}
+            alt={item.id || "Gallery image"}
             width={400} // 这里可以给一个基准宽度
             height={600} // 这里给一个预估的平均高度，Next.js会计算宽高比
             className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
